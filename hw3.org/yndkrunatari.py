@@ -8,7 +8,6 @@ import tensorflow as tf
 import tensorflow.contrib.layers as layers
 
 import dqn
-import dqn_utils
 from dqn_utils import *
 from atari_wrappers import *
 
@@ -34,16 +33,14 @@ def atari_learn(env,
                 num_timesteps):
     # This is just a rough estimate
     num_iterations = float(num_timesteps) / 4.0
-    print ('## atari_learn(): num_timesteps={}M  num_iterations={}'.format(num_timesteps/1000, num_iterations))
 
     lr_multiplier = 1.0
-    lr_schedule = dqn_utils.PiecewiseSchedule([
+    lr_schedule = PiecewiseSchedule([
                                          (0,                   1e-4 * lr_multiplier),
                                          (num_iterations / 10, 1e-4 * lr_multiplier),
                                          (num_iterations / 2,  5e-5 * lr_multiplier),
                                     ],
                                     outside_value=5e-5 * lr_multiplier)
-
     optimizer = dqn.OptimizerSpec(
         constructor=tf.train.AdamOptimizer,
         kwargs=dict(epsilon=1e-4),
@@ -55,7 +52,7 @@ def atari_learn(env,
         # which is different from the number of steps in the underlying env
         return get_wrapper_by_name(env, "Monitor").get_total_steps() >= num_timesteps
 
-    exploration_schedule = dqn_utils.PiecewiseSchedule(
+    exploration_schedule = PiecewiseSchedule(
         [
             (0, 1.0),
             (1e6, 0.1),
@@ -122,7 +119,7 @@ def get_env(task, seed):
 def main():
     # Get Atari games.
     benchmark = gym.benchmark_spec('Atari40M')
-
+    print (benchmark)
     # Change the index to select a different game.
     task = benchmark.tasks[3]
 

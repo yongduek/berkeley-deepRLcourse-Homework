@@ -8,8 +8,6 @@ import tensorflow.contrib.layers as layers
 from collections import namedtuple
 from dqn_utils import *
 
-# namedtuple in python creates a class.
-# it creates a Factory function for tuples with name fields
 OptimizerSpec = namedtuple("OptimizerSpec", ["constructor", "kwargs", "lr_schedule"])
 
 def learn(env,
@@ -133,8 +131,6 @@ def learn(env,
 
     ######
 
-    total_error = 0
-
     # construct optimization op (with gradient clipping)
     learning_rate = tf.placeholder(tf.float32, (), name="learning_rate")
     optimizer = optimizer_spec.constructor(learning_rate=learning_rate, **optimizer_spec.kwargs)
@@ -213,10 +209,6 @@ def learn(env,
         if (t > learning_starts and
                 t % learning_freq == 0 and
                 replay_buffer.can_sample(batch_size)):
-
-            print ('### 3. Perform experience replay and train the network.')
-
-            return
             # Here, you should perform training. Training consists of four steps:
             # 3.a: use the replay buffer to sample a batch of transitions (see the
             # replay buffer code for function definition, each batch that you sample
