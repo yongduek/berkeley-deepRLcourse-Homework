@@ -293,9 +293,10 @@ def learn(env,
 
             # defined in dqn_utils.py
             if model_initialized == False:
+                model_initialized = True
                 initialize_interdependent_variables(session,
                                                     tf.global_variables(),
-                                                    {obs_t_ph: obs_t_batch, obs_tp1_ph: obs_tp1_batch})
+                                                    {obs_t_ph: bobs, obs_tp1_ph: bnobs})
 
             # 3.c:
             # train the model. To do this, you'll need to use the train_fn and
