@@ -12,19 +12,19 @@ import tensorflow.contrib.layers as layers
 from collections import namedtuple
 
 #import dqn_utils
-from dqn_utils import *
+#from dqn_utils import *
 
 # namedtuple in python creates a class.
 # it creates a Factory function for tuples with name fields
-from hw3 import dqn_utils
-from hw3.dqn_utils import ReplayBuffer, get_wrapper_by_name, minimize_and_clip
+import dqn_utils
+from dqn_utils import ReplayBuffer, get_wrapper_by_name, minimize_and_clip
 
 OptimizerSpec = namedtuple("OptimizerSpec", ["constructor", "kwargs", "lr_schedule"])
 
 def learn(env,
           q_func,
           optimizer_spec,
-          tfss,
+          session,
           exploration=dqn_utils.LinearSchedule(1000000, 0.1),
           stopping_criterion=None,
           replay_buffer_size=1000000,
@@ -243,7 +243,7 @@ def learn(env,
             action = env.action_space.sample() # random action
         else: # exploration
             otph = replay_buffer.encode_recent_observation()
-            action = tfss.run (tf.argmax(Qfunc), feed_dict={obs_t_ph: otph})
+            action = session.run (tf.argmax(Qfunc), feed_dict={obs_t_ph: otph})
 
         obstp1, reward, done, info = env.step (action)
 
@@ -292,7 +292,7 @@ def learn(env,
 
             # defined in dqn_utils.py
             if model_initialized == False:
-                initialize_interdependent_variables(tfss,
+                initialize_interdependent_variables(session,
                                                     tf.global_variables(),
                                                     {obs_t_ph: obs_t_batch, obs_tp1_ph: obs_tp1_batch})
 
@@ -318,7 +318,7 @@ def learn(env,
                        obs_tp1_ph: bnobs, done_mask_ph: bdone,
                        learning_rate: lr}
 
-            tfss.run (train_fn, feed_dict=feed_dict)
+            session.run (train_fn, feed_dict=feed_dict)
 
             # 3.d:
             # periodically update the target network by calling
@@ -331,7 +331,7 @@ def learn(env,
             #####
 
             if t % target_update_freq == 0:
-                tfss.run (update_target_fn)
+                session.run (update_target_fn)
                 num_param_updates += 1
                 print ('## Qtarget updated {} times.'.format(num_param_updates))
 
