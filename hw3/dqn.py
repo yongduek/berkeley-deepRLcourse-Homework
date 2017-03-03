@@ -17,7 +17,7 @@ from collections import namedtuple
 # namedtuple in python creates a class.
 # it creates a Factory function for tuples with name fields
 import dqn_utils
-from dqn_utils import ReplayBuffer, get_wrapper_by_name, minimize_and_clip
+from dqn_utils import ReplayBuffer, get_wrapper_by_name, minimize_and_clip, initialize_interdependent_variables
 
 OptimizerSpec = namedtuple("OptimizerSpec", ["constructor", "kwargs", "lr_schedule"])
 
