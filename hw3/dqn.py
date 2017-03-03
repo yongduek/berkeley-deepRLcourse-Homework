@@ -251,6 +251,7 @@ def learn(env,
 
         if done :
             env.reset()
+            print ('## done with reward={}'.format(reward))
 
         last_obs = obstp1
 

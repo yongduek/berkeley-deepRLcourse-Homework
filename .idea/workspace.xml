@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c629903-3cbf-462d-a1a1-148bc9f9b216" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hw3/dqn.py" afterPath="$PROJECT_DIR$/hw3/dqn.py" />
     </list>
     <ignored path="berkeley-deepRLcourse-Homework.iws" />
@@ -38,8 +37,8 @@
       <file leaf-file-name="dqn.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hw3/dqn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="238" column="72" selection-start-line="238" selection-start-column="72" selection-end-line="238" selection-end-column="72" />
+            <state relative-caret-position="782">
+              <caret line="253" column="58" selection-start-line="253" selection-start-column="58" selection-end-line="253" selection-end-column="58" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -453,8 +452,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hw3/dqn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="238" column="72" selection-start-line="238" selection-start-column="72" selection-end-line="238" selection-end-column="72" />
+        <state relative-caret-position="782">
+          <caret line="253" column="58" selection-start-line="253" selection-start-column="58" selection-end-line="253" selection-end-column="58" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
