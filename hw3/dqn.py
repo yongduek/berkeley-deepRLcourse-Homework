@@ -151,16 +151,16 @@ def learn(env,
     Qfunc = q_func(obs_t_float, num_actions, scope='Qfunc')
     q_func_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='Qfunc')
 
-    Qtarget = q_func(obs_t_float, num_actions, scope='Qtarget')
+    Qtarget = q_func(obs_tp1_float, num_actions, scope='Qtarget')
     target_q_func_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='Qtarget')
 
 
     #total_error = (y - Q)^2
-    # y = r + gamma * max_a Qtarget(S_t+1, a)
+    # y = r + gamma * max_a' Qtarget(S_t+1, a')
 
     q_tp1 = tf.reduce_max (Qtarget)
     y = rew_t_ph + (1. - done_mask_ph) * (gamma * q_tp1)
-    total_error = tf.reduce_sum ( tf.square (y - Qfunc) )
+    total_error = tf.reduce_sum ( tf.square (y - Qfunc[act_t_ph]) )
 
     # ---------------
 
@@ -193,6 +193,8 @@ def learn(env,
     last_obs = env.reset()
 
     LOG_EVERY_N_STEPS = 10000
+
+    episode_count = 1
 
     for t in itertools.count(): # itertools.count(n) generates an infinite iterator starting from n.
         ### 1. Check stopping criterion
@@ -249,9 +251,12 @@ def learn(env,
 
         replay_buffer.store_effect(last_obs_indx, action, reward, done)
 
+        episode_count += 1
+
         if done :
             env.reset()
-            print ('## done with reward={}'.format(reward))
+            print ('## done {} with reward={}'.format(episode_count, reward))
+            episode_count = 0
 
         last_obs = obstp1
 
