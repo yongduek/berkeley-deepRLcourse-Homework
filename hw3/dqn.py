@@ -160,7 +160,9 @@ def learn(env,
 
     q_tp1 = tf.reduce_max (Qtarget)
     y = rew_t_ph + (1. - done_mask_ph) * (gamma * q_tp1)
-    total_error = tf.reduce_sum ( tf.square (y - Qfunc[act_t_ph]) )
+    #total_error = tf.reduce_sum ( tf.square (y - Qfunc[act_t_ph]) )
+    Qfunc_action_t = tf.reduce_sum( tf.multiply (Qfunc, tf.one_hot(act_t_ph, num_actions)) )
+    total_error = tf.reduce_sum(tf.square(y - Qfunc_action_t)
 
     # ---------------
 
