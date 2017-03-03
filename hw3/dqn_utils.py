@@ -172,7 +172,7 @@ def get_wrapper_by_name(env, classname):
             raise ValueError("Couldn't find wrapper named %s"%classname)
 
 class ReplayBuffer(object):
-    def __init__(self, size, frame_history_len):
+    def __init__(self, size, frame_history_len) -> object:
         """This is a memory efficient implementation of the replay buffer.
 
         The sepecific memory optimizations use here are:
@@ -197,6 +197,10 @@ class ReplayBuffer(object):
             overflows the old memories are dropped.
         frame_history_len: int
             Number of memories to be retried for each observation.
+
+        Returns
+        -------
+        class ReplayBuffer
         """
         self.size = size
         self.frame_history_len = frame_history_len
