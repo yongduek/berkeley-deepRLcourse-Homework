@@ -236,7 +236,7 @@ def learn(env,
         last_obs_indx = replay_buffer.store_frame(last_obs)
 
         action = 0
-        p_random = exploration.value(t)
+        p_random = exploration.value(t) # sample exploration probability
         if np.random.rand() < p_random \
                 or replay_buffer.can_sample(batch_size)==False\
                 or t <= learning_starts:
