@@ -295,12 +295,12 @@ def learn(env,
             # Remember that you have to update the target network too (see 3.d)!
 
             # defined in dqn_utils.py
-            if model_initialized == False:
-                model_initialized = True
-                initialize_interdependent_variables(session,
+            #if model_initialized == False:
+            #    model_initialized = True
+            initialize_interdependent_variables(session,
                                                     tf.global_variables(),
                                                     {obs_t_ph: bobs, obs_tp1_ph: bnobs})
-                print ('  3.b initialize_interdependent_variables().')
+            print ('  3.b initialize_interdependent_variables().')
 
             # 3.c:
             # train the model. To do this, you'll need to use the train_fn and
