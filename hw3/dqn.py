@@ -104,26 +104,19 @@ def learn(env,
     # set up placeholders
     # placeholder for current observation (or state)
     obs_t_ph              = tf.placeholder(tf.uint8, [None] + list(input_shape))
-
     # placeholder for current action
     act_t_ph              = tf.placeholder(tf.int32,   [None])
-
     # placeholder for current reward
     rew_t_ph              = tf.placeholder(tf.float32, [None])
-
     # placeholder for next observation (or state)
     obs_tp1_ph            = tf.placeholder(tf.uint8, [None] + list(input_shape))
-
     # placeholder for end of episode mask
     # this value is 1 if the next state corresponds to the end of an episode,
     # in which case there is no Q-value at the next state; at the end of an
     # episode, only the current state reward contributes to the target, not the
     # next state Q-value (i.e. target is just rew_t_ph, not rew_t_ph + gamma * q_tp1)
-
     done_mask_ph          = tf.placeholder(tf.float32, [None])
-
     # casting to float on GPU ensures lower data transfer times.
-
     obs_t_float   = tf.cast(obs_t_ph,   tf.float32) / 255.0
     obs_tp1_float = tf.cast(obs_tp1_ph, tf.float32) / 255.0
 
@@ -161,7 +154,8 @@ def learn(env,
     q_tp1 = tf.reduce_max (Qtarget)
     y = rew_t_ph + (1. - done_mask_ph) * (gamma * q_tp1)
     #total_error = tf.reduce_sum ( tf.square (y - Qfunc[act_t_ph]) )
-    Qfunc_action_t = tf.reduce_sum( tf.multiply (Qfunc, tf.one_hot(act_t_ph, num_actions)) )
+    actions_onehot = tf.one_hot (act_t_ph, num_actions, dtype=tf.float32)
+    Qfunc_action_t = tf.reduce_sum(  tf.multiply (Qfunc, actions_onehot), axis=1 )
     total_error = tf.reduce_sum(tf.square(y - Qfunc_action_t))
 
     # ---------------
