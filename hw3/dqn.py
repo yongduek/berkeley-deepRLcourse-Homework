@@ -1,3 +1,4 @@
+# check!
 import sys
 import gym.spaces
 # python3 standard library,
@@ -277,6 +278,7 @@ def learn(env,
             # replay buffer code for function definition, each batch that you sample
             # should consist of current observations, current actions, rewards,
             # next observations, and done indicator).
+            print ('  3.a replay_buffer.sample({})'.format(batch_size))
 
             bobs, baction, brew, bnobs, bdone = replay_buffer.sample (batch_size)
 
@@ -298,6 +300,7 @@ def learn(env,
                 initialize_interdependent_variables(session,
                                                     tf.global_variables(),
                                                     {obs_t_ph: bobs, obs_tp1_ph: bnobs})
+                print ('  3.b initialize_interdependent_variables().')
 
             # 3.c:
             # train the model. To do this, you'll need to use the train_fn and
@@ -315,6 +318,7 @@ def learn(env,
             # learning_rate -- you can get this from optimizer_spec.lr_schedule.value(t)
             # (this is needed by the optimizer to choose the learning rate)
 
+            print ('  3.c train the model.')
             lr = optimizer_spec.lr_schedule.value(t)
 
             feed_dict={obs_t_ph: bobs, act_t_ph: baction, rew_t_ph: brew,
@@ -333,6 +337,7 @@ def learn(env,
             # YOUR CODE HERE
             #####
 
+            print ('  3.d periodically update the target network.')
             if t % target_update_freq == 0:
                 session.run (update_target_fn)
                 num_param_updates += 1
