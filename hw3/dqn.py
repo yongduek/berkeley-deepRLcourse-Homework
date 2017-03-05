@@ -337,8 +337,8 @@ def learn(env,
             # YOUR CODE HERE
             #####
 
-            print ('  3.d periodically update the target network.')
             if t % target_update_freq == 0:
+                print('  3.d periodically update the target network.')
                 session.run (update_target_fn)
                 num_param_updates += 1
                 print ('## Qtarget updated {} times.'.format(num_param_updates))
